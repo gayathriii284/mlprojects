@@ -39,8 +39,8 @@ class DataTransformation:
             #Creating pipelines for numerical and categorical features
             numerical_pipeline=Pipeline(
                 steps= [
-                    ("imputer",SimpleImputer(strategy="median")),
-                    ("scalar",StandardScaler())
+                    ("imputer",SimpleImputer(strategy="median")), 
+                    ("scalar",StandardScaler(with_mean=False))
                 ]
             )
 
@@ -91,13 +91,13 @@ class DataTransformation:
 
             #TRAINING DATAFRAME
             #Removing the target label from the training dataset
-            X_train_df = train_df.drop(columns=[target_column],axis=1)
+            X_train_df = train_df.drop(columns=target_column,axis=1)
             #Target
             y_train_df= train_df[target_column]
 
             #TEST DATAFRAME
             #Applying the same for test dataframe
-            X_test_df = test_df.drop(columns=[target_column],axis=1)
+            X_test_df = test_df.drop(columns=target_column,axis=1)
             #Target
             y_test_df = test_df[target_column]
 
@@ -118,7 +118,7 @@ class DataTransformation:
             logging.info("Created the respective train test arrays")
 
             save_object(
-                file_path=self.data_transformation_config.preprocess_obj_file_path
+                file_path=self.data_transformation_config.preprocess_obj_file_path,
                 obj=preprocessor_obj
             )
 
@@ -130,3 +130,6 @@ class DataTransformation:
                 self.data_transformation_config.preprocess_obj_file_path
             )
 
+        except Exception as e:
+            logging.info("Exception has been raised {e}")
+            raise CustomException(e,sys)
