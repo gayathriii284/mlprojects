@@ -33,8 +33,8 @@ class DataTransformation:
             numerical_features = ["reading_score","writing_score"]
             categorical_features = ["gender","race_ethnicity","parental_level_of_education","lunch","test_preparation_course"]
 
-            logging.info("Categorical features are:",categorical_features)
-            logging.info("Numerical features are:",numerical_features)
+            logging.info(f"Categorical features are:{numerical_features}")
+            logging.info(f"Numerical features are:{categorical_features}")
 
             #Creating pipelines for numerical and categorical features
             numerical_pipeline=Pipeline(
@@ -50,7 +50,7 @@ class DataTransformation:
                 steps=[
                     ("imputer",SimpleImputer(strategy="most_frequent")),
                     ("one_hot_encoder",OneHotEncoder()),
-                    ("scalar",StandardScaler())
+                    ("scalar",StandardScaler(with_mean=False))
                 ]
             )
 
