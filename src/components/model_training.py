@@ -5,11 +5,9 @@ import pandas as pd
 from dataclasses import dataclass
 
 
-from data_transformation import DataTransformation
-from data_ingestion import DataIngestion
-from src.logger import logging
-from src.exception import CustomException
-from src.utils import save_object,evaluate_model
+from logger import logging
+from exception import CustomException
+from utils import save_object,evaluate_model
 
 #Import all the required models
 from sklearn.ensemble import RandomForestRegressor
@@ -60,13 +58,24 @@ class ModelTraining:
             model_report:dict=evaluate_model(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,
                                              models=models)
             
+            logging.info(f"Model Report {model_report}")
+            
             #Get the best model score
             best_model_score = max(model_report.values())
             
+            logging.info(f"Best Score:{best_model_score}")
+            
+            #Convert to lists since dictionaries are unordered and cannot be indexed through positions
+            listModelReport = list(model_report)
+            listModelReportThroughValues = list(model_report.values())
+            
             #To get the best model name 
-            best_model_name = list(model_report.keys)[list(model_report.index(best_model_score))]
+            best_model_name = listModelReport[listModelReportThroughValues.index(best_model_score)]
             best_model = models[best_model_name]
             
+            #Deleting the list variables
+            del listModelReport,listModelReportThroughValues
+                        
             logging.info(f"The best model is {best_model_name} with a score of {best_model_score}")
             
             #Raise an exception if in case the r2 score is not beyond 0.6

@@ -2,7 +2,7 @@
 This file handles all the errors happening in the python program
 """
 import sys
-from src.logger import logging
+from logger import logging
 
 #Define a function to get the error message details
 def error_message_detail(error,error_detail:sys):

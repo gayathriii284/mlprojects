@@ -4,7 +4,7 @@ import dill
 
 import pandas as pd
 import numpy as np
-from src.exception import CustomException
+from exception import CustomException
 from sklearn.metrics import r2_score
 
 def save_object(file_path,obj):
